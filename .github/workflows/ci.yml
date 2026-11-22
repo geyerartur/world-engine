@@ -34,24 +34,24 @@ jobs:
           cmakeVersion: 4.4.1
           ninjaVersion: latest
 
+            - name: Install Alire
+        uses: alire-project/setup-alire@v6
+
       - name: Install GNAT and GPRbuild
         uses: alire-project/alr-install@v2
         with:
           crates: gnat_native gprbuild
+          prefix: alire_prefix
+          clean: false
 
       - name: Display toolchain versions
         run: |
+          alr --version
           cmake --version
           gcc --version
           gfortran --version
           gnat --version
           gprbuild --version
-
-      - name: Prepare Ada crate
-        working-directory: src/planet
-        run: |
-          alr --version
-          alr build
 
       - name: Prepare Ada crate
         working-directory: src/planet
