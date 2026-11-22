@@ -1,0 +1,52 @@
+with "config/world_engine_planet_config.gpr";
+project World_Engine_Planet is
+
+   for Library_Name use "World_Engine_Planet";
+   for Library_Version use Project'Library_Name & ".so." & World_Engine_Planet_Config.Crate_Version;
+   for Library_Standalone use "standard";
+
+   for Library_Interface use (
+      "World_Engine_Planet"
+   );
+
+   for Source_Dirs use ("src/", "config/");
+   for Object_Dir use "../../build/planet/obj/" & World_Engine_Planet_Config.Build_Profile;
+   for Create_Missing_Dirs use "True";
+   for Library_Dir use "../../build/planet/lib";
+
+   type Library_Type_Type is ("relocatable", "static", "static-pic");
+   Library_Type : Library_Type_Type :=
+     external ("WORLD_ENGINE_PLANET_LIBRARY_TYPE", external ("LIBRARY_TYPE", "static"));
+   for Library_Kind use Library_Type;
+
+   package Compiler is
+      for Default_Switches ("Ada") use World_Engine_Planet_Config.Ada_Compiler_Switches;
+   end Compiler;
+
+   package Binder is
+      for Switches ("Ada") use ("-Es"); --  Symbolic traceback
+   end Binder;
+
+   package Install is
+      for Artifacts (".") use ("share");
+   end Install;
+
+   package Format is
+
+    for Indentation ("Ada") use "4";
+
+    for Indentation_Kind ("Ada") use "spaces";
+
+    for Width ("Ada") use "120";
+
+    for Keyword_Casing ("Ada") use "lower";
+
+    for Identifier_Casing ("Ada") use "keep";
+
+    for Layout ("Ada") use "default";
+
+    for End_Of_Line ("Ada") use "lf";
+
+end Format;
+
+end World_Engine_Planet;

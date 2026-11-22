@@ -1,0 +1,19 @@
+
+line_width: 100
+tab_size: 4
+use_tabchars: false
+
+separate_ctrl_name_with_space: false
+separate_fn_name_with_space: false
+
+dangle_parens: true
+dangle_align: prefix
+
+command_case: canonical
+keyword_case: unchanged
+
+enable_sort: false
+
+line_ending: unix
+
+first_comment_is_literal: true

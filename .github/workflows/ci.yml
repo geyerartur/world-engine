@@ -1,0 +1,63 @@
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Ubuntu / GCC / GNAT
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            gcc \
+            gfortran \
+            ninja-build
+
+      - name: Install CMake
+        uses: lukka/get-cmake@latest
+        with:
+          cmakeVersion: 4.4.1
+          ninjaVersion: latest
+
+      - name: Install GNAT and GPRbuild
+        uses: alire-project/alr-install@v2
+        with:
+          crates: gnat_native gprbuild
+
+      - name: Display toolchain versions
+        run: |
+          cmake --version
+          gcc --version
+          gfortran --version
+          gnat --version
+          gprbuild --version
+
+      - name: Configure
+        run: |
+          cmake -S . -B build \
+            -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Test
+        run: |
+          ctest --test-dir build \
+            --build-config Release \
+            --output-on-failure

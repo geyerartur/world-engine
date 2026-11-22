@@ -1,0 +1,9 @@
+name = "world_engine_planet"
+description = "Planetary simulation and physical evolution subsystem for WorldEngine."
+version = "0.1.0-dev"
+
+authors = ["Geyer Artur"]
+maintainers = ["Geyer Artur <contact@geyerartur.com>"]
+licenses = "MIT"
+website = ""
+tags = []
