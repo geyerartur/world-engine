@@ -34,7 +34,7 @@ jobs:
           cmakeVersion: 4.4.1
           ninjaVersion: latest
 
-            - name: Install Alire
+      - name: Install Alire
         uses: alire-project/setup-alire@v6
 
       - name: Install GNAT and GPRbuild
