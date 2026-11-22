@@ -47,6 +47,18 @@ jobs:
           gnat --version
           gprbuild --version
 
+      - name: Prepare Ada crate
+        working-directory: src/planet
+        run: |
+          alr --version
+          alr build
+
+      - name: Prepare Ada crate
+        working-directory: src/planet
+        run: |
+          alr build
+          test -f config/world_engine_planet_config.gpr
+
       - name: Configure
         run: |
           cmake -S . -B build \

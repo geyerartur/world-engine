@@ -17,20 +17,12 @@ pre-commit:
       glob: "*.md"
       run: markdownlint-cli2 {staged_files}
 
-    yaml:
-      glob: "*.{yml,yaml}"
-      run: yamllint {staged_files}
-
 commit-msg:
   commands:
-    conventional:
-      run: |
-        FIRST_LINE=$(grep -v '^#' {1} | head -n 1)
-        if ! echo "$FIRST_LINE" | grep -Eq '^(Merge |Revert "|(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-zA-Z0-9._/-]+\))?!?: .+)'; then
-          echo "Invalid commit message: '$FIRST_LINE'"
-          echo "Expected format: <type>(<scope>): <description>"
-          exit 1
-        fi
+    conventional-commit:
+      run: sh scripts/conventional-commit.sh {1}
+
+
 
 
 pre-push:
